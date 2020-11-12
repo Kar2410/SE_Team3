@@ -121,7 +121,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                             <td><label for="description">Description: </label></td>
                                             <td><input type="text" name="description" placeholder="Expense Description"></td>
                                         </tr>
-
+                                       
                                         <tr><td><label for="group_name">Add Group Members: </label></td></tr>
                                         <tr>
                                             <td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required></td>
@@ -182,31 +182,23 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <div class="all_users">
                     <h1>Group Names</h1>
                 <?php
+				if($retResultId>0)
+				{
+                foreach ($retResultId as $id_num){
+                    foreach ($retResult as $item) {
+                        foreach ($retAllGroups as $row){
+                            if($row->id === $id_num and $row->group_name === $item){
 
-                if($retResult){
-                    foreach ($retResultId as $id_num){
-                        foreach ($retResult as $item) {
-                            foreach ($retAllGroups as $row){
-                                if($row->id === $id_num and $row->group_name === $item){
-                                    echo '<div class="user_box">
+                        echo '<div class="user_box">
                                  <div class="user_info"><span>'.$item.'</span></div>
                                  <span><a href="groups_expense.php?id='.$id_num.'" class="see_profileBtn">View</a></span>
                                </div>';
-                                }
                             }
                         }
-
                     }
+
                 }
-                else{
-                    echo '<div class="user_box">
-                                 <div class="user_info"><span>There are no Groups</span></div>
-                                 
-                               </div>';
-
-                
 				}
-
 
                 ?>
                 </div>

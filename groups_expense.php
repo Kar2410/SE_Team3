@@ -166,7 +166,6 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                     elseif($uname === $item){
                                         $uid = $user_data->id;
                                     }
-
                                 }
 
                                 echo '<div class="user_box">
