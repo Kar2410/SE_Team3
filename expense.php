@@ -15,18 +15,6 @@ else{
     exit;
 }
 
-//expense button
-if(isset($_POST['submit'])) {
-    if (isset($_POST['description']) && isset($_POST['paid_by']) && isset($_POST['share_with']) && isset($_POST['amount'])) {
-        $result = $expenses_obj->insertExpense($_POST['description'], $_POST['paid_by'], $_POST['share_with'], $_POST['amount']);
-
-    } else {
-        $result['errorMessage'] = 'Fields are filled.';
-    }
-}
-
-
-
 $s_id = '';
 if(isset($_POST['fetch_btn'])) {
     $s_id = $_POST['get_email'];
@@ -90,80 +78,51 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
             </ul>
         </nav>
 
-
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="login_signup_container groups_container" >
-                        <div class="form-group">
-                            <form action="" method="POST" name="add_name" id="add_name">
-                                <div class="table-responsive">
-                                    <table><tr><th>Create An Expense</th></tr></table>
-
-                                    <table class="table table-bordered" id="dynamic_field">
-
-                                        <tr>
-                                            <td><label for="description">Description:</label></td>
-                                            <td><input type="text" name="description"  required /> </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="paid_by">
-                                                    Paid By: </label>
-                                               </td>
-                                            <td> <select name='paid_by' id='paid_by'>
-                                                    <?php
-                                                    echo '<option id="user1">'.$user_data->username.'</option>';
-                                                    foreach ($get_all_friends as $row){
-                                                        echo '<option>'.$row->username.'</option>';
-                                                    }?>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="share_with">Share with: </label>
-                                                </td>
-                                            <td><select name='share_with' id='share_with'>
-                                                    <?php
-                                                    echo '<option value="" disabled selected>Select User</option>';
-                                                    foreach ($get_all_friends as $row){
-                                                        echo '<option>'.$row->username.'</option>';
-                                                    }?>
-                                                </select></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><label for="amount">Amount:</label></td>
-                                            <td><input type="text" name="amount" required /></td>
-                                        </tr>
-
-                                    </table>
-                                    <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
-                                </div>
-
-                            </form>
-                            <div>
-                                <?php
-                                if(isset($result['errorMessage'])){
-                                    echo '<p class="errorMsg">'.$result['errorMessage'].'</p>';
-                                }
-                                if(isset($result['successMessage'])){
-                                    echo '<p class="successMsg">'.$result['successMessage'].'</p>';
-                                }
-                                ?>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="col">
-                    <div class="profile_container">
-                        <div class="all_users">
-
-                        </div>
-                    </div>
-                </div>
-
+        <div class="add">
+            <center ><b>&nbsp &nbsp ADD AN EXPENSE</b></center>
+            <br></br>
+            <div class="container-fluid" style="border:1px solid #cecece;">
+                <br>
+                <form action="expense_added.php" method="post">
+                    <label for="desc">
+                        Description:
+                    </label>
+                    <input type="text" name="description"  required /> <br>
+                    <label for="paid_by">
+                        With you and: </label>
+                       
+                    &nbsp
+                   
+                    <select name='share_with' id='share_with'>
+                        <?php
+                        echo '<option id="user2">'.$user_data->username.'</option>';
+                        foreach ($get_all_friends as $row){
+                            echo '<option>'.$row->username.'</option>';
+                        }?>
+                    </select>
+                    <br>
+                    <label for="amount">
+                            Amount:
+                    </label>
+					
+                    <input type="text" name="amount" required />
+					
+                <br>
+				<label for="split_type">Split Type: </label><br>
+				<input type="radio" id="you_equally" name="split" value="you_equally">
+				<label for="you_equally">Paid by you and Share Equally</label><br>
+				<input type="radio" id="them_equally" name="split" value="them_equally">
+				<label for="them_equally">Paid by them and Share Equally</label><br>
+				<input type="radio" id="they_owe" name="split" value="they_owe">
+				<label for="they_owe">They owe you completely</label><br>
+				<input type="radio" id="you_owe" name="split" value="you_owe">
+				<label for="you_owe">you owe them completely</label>
+	
+				
+				
+                    <input type="submit" name="expense_button" value="Submit" />
+                    <br>
+                </form>
             </div>
         </div>
 
